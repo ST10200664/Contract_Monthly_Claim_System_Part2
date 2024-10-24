@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System_Part2.Models.Claim>
+
+<h2>Submitted Claims</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.SubmissionDate</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

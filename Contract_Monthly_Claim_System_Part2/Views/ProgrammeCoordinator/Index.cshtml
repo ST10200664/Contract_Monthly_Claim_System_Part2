@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System_Part2.Models.ProgrammeCoordinator>
+
+<h2>Programme Coordinators</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var coordinator in Model)
+        {
+            <tr>
+                <td>@coordinator.Name</td>
+                <td>@coordinator.Email</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@coordinator.ProgrammeCoordinatorId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@coordinator.ProgrammeCoordinatorId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@coordinator.ProgrammeCoordinatorId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Create New</a>

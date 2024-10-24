@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System_Part2.Models.Claim>
+
+@{
+    ViewData["Title"] = "View Claims";
+}
+
+<h2>Submitted Claims</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Lecturer Name</th>
+            <th>Claim Amount</th>
+            <th>Status</th>
+            <th>Date Submitted</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.Id</td>
+                <td>@claim.Lecturer.Name</td>
+                <td>@claim.Amount</td>
+                <td>@claim.Status</td>
+                <td>@claim.SubmissionDate.ToString("yyyy-MM-dd")</td>
+                @switch (claim.Status)
+                {
+                    case "Pending":
+                        <span class="badge bg-warning text-dark">Pending</span>
+                        ;
+                        break;
+                    case "Verified by Coordinator":
+                        <span class="badge bg-info text-dark">Verified by Coordinator</span>
+                        ;
+                        break;
+                    case "Approved":
+                        <span class="badge bg-success">Approved</span>
+                        ;
+                        break;
+                    case "Rejected":
+                        <span class="badge bg-danger">Rejected</span>
+                        ;
+                        break;
+                }
+                <td>
+                    <a class="btn btn-primary" href="@Url.Action("ClaimDetails", new { id = claim.Id })">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="@Url.Action("CreateClaim")">Submit a New Claim</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder().withUrl("/claimshub").build();
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiveClaimStatusUpdate", function (claimId, status) {
+        var claimRow = document.getElementById("claim-" + claimId);
+        var statusCell = claimRow.querySelector(".claim-status");
+
+        // Update the status text or progress bar here
+        statusCell.innerText = status;
+    });
+</script>

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4" style="color: #007bff;">Welcome to the Contract Monthly Claim System (CMCS)</h1>
+        <p class="lead" style="color: #6c757d;">
+            This system allows lecturers to submit claims, and programme coordinators and academic managers to verify and approve them.
+        </p>
+
+        <div class="btn-group mt-4" role="group" aria-label="Actions">
+            <a class="btn btn-primary btn-lg" href="@Url.Action("ViewClaims", "Home")" style="background-color: #17a2b8; border: none;">View Submitted Claims</a>
+            <a class="btn btn-success btn-lg" href="@Url.Action("CreateClaim", "Home")" style="background-color: #28a745; border: none;">Submit a New Claim</a>
+        </div>
+
+        <p class="mt-5">
+            <span style="color: #ffc107; font-weight: bold;">Learn more</span> about
+            <a href="https://learn.microsoft.com/aspnet/core" style="color: #007bff; text-decoration: underline;">building Web apps with ASP.NET Core</a>.
+        </p>
+    </div>
+</div>

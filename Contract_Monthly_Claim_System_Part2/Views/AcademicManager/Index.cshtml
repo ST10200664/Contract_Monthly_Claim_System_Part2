@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Contract_Monthly_Claim_System_Part2.Models.AcademicManager>
+
+<h2>Academic Managers</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var manager in Model)
+        {
+            <tr>
+                <td>@manager.Name</td>
+                <td>@manager.Email</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@manager.AcademicManagerId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@manager.AcademicManagerId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@manager.AcademicManagerId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Create New</a>
