@@ -7,10 +7,10 @@
 <div class="container mt-5" style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <h2 class="text-center" style="color: #007bff;">Submit a New Claim</h2>
 
-    <form asp-action="CreateClaim" method="post">
+    <form asp-action="CreateClaim" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label asp-for="LecturerId" class="control-label" style="color: #343a40;">Lecturer</label>
-            <select asp-for="LecturerId" class="form-control" asp-items="ViewBag.Lecturers" style="border-color: #007bff;">
+            <select asp-for="LecturerId" asp-items="ViewBag.LecturerId" class="form-control" style="border-color: #007bff;">
                 <option value="">-- Select Lecturer --</option>
             </select>
             <span asp-validation-for="LecturerId" class="text-danger"></span>
@@ -34,9 +34,38 @@
             <span asp-validation-for="SubmissionDate" class="text-danger"></span>
         </div>
 
+        <div class="form-group">
+            <label asp-for="Status" class="control-label" style="color: #343a40;">Status</label>
+            <input asp-for="Status" class="form-control" style="border-color: #007bff;" />
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SupportingDocument" class="control-label" style="color: #343a40;">Supporting Document</label>
+            <input asp-for="SupportingDocument" type="file" class="form-control" style="border-color: #007bff;" />
+            <span asp-validation-for="SupportingDocument" class="text-danger"></span>
+        </div>
+
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-primary" style="background-color: #28a745; border: none; padding: 10px 20px;">Submit Claim</button>
             <a class="btn btn-secondary" href="@Url.Action("ViewClaims")" style="padding: 10px 20px;">Cancel</a>
         </div>
     </form>
 </div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

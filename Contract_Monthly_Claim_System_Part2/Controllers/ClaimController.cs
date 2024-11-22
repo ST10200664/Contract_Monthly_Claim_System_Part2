@@ -1,5 +1,6 @@
 ﻿using Contract_Monthly_Claim_System_Part2.Data;
 using Contract_Monthly_Claim_System_Part2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace Contract_Monthly_Claim_System_Part2.Controllers
         }
 
         // GET: Claim/Create
+       
         public IActionResult Create()
         {
             return View();
@@ -40,6 +42,7 @@ namespace Contract_Monthly_Claim_System_Part2.Controllers
         }
 
         // GET: Claim/Index
+       
         public async Task<IActionResult> Index()
         {
             return View(await _context.Claims.ToListAsync());
@@ -103,6 +106,26 @@ namespace Contract_Monthly_Claim_System_Part2.Controllers
 
             return RedirectToAction("ApproveClaims");
         }
+
+        public IActionResult GenerateReport()
+        {
+            var approvedClaims = _context.Claims.Where(c => c.Status == "Approved").ToList();
+            return View(approvedClaims);
+        }
+
+        [Authorize(Policy = "AdminOnly")]
+        public IActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "LecturerOnly")]
+        public IActionResult LecturerDashboard()
+        {
+            return View();
+        }
+
+
     }
 
 

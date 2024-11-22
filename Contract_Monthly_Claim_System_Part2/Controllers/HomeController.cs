@@ -61,9 +61,15 @@ namespace Contract_Monthly_Claim_System_Part2.Controllers
         // Create a new claim (for lecturers)
         public IActionResult CreateClaim()
         {
+            if (_context.Lecturers == null || !_context.Lecturers.Any())
+            {
+                // Log an error or handle it gracefully
+                ModelState.AddModelError("", "No lecturers found in the system.");
+                return View();
+            }
 
             // Retrieve a list of lecturers from the database
-            ViewBag.Lecturers = new SelectList(_context.Lecturers, "Id", "FullName");
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name");
             return View();
         }
 
@@ -74,12 +80,13 @@ namespace Contract_Monthly_Claim_System_Part2.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(claim);
-                await _context.SaveChangesAsync();  // Save the claim to the database
-                return RedirectToAction(nameof(ViewClaims));  // Redirect to view all claims
+                _context.Claims.Add(claim);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
 
-            return View(claim);  // If invalid, redisplay the form with validation errors
+            ViewData["LecturerId"] = new SelectList(_context.Lecturers, "LecturerId", "Name", claim.LecturerId);
+            return View(claim);
         }
 
         // Handle errors

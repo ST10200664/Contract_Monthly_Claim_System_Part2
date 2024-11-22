@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Claim>
+<h2>Approved Claims Report</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Lecturer</th>
+            <th>Total Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.Lecturer </td>
+                <td>@claim.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>

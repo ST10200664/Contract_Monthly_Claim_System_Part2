@@ -14,6 +14,10 @@
         <label asp-for="HourlyRate"></label>
         <input asp-for="HourlyRate" class="form-control" />
     </div>
+    <div>
+        <label>Total Payment:</label>
+        <input asp-for="Amount" id="totalPayment" readonly />
+    </div>
 
     <div class="form-group">
         <label asp-for="SupportingDocument"></label>
@@ -22,4 +26,13 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<script>
+    document.getElementById("hoursWorked").addEventListener("input", calculateTotal);
+    document.getElementById("hourlyRate").addEventListener("input", calculateTotal);
 
+    function calculateTotal() {
+        let hoursWorked = parseFloat(document.getElementById("hoursWorked").value) || 0;
+        let hourlyRate = parseFloat(document.getElementById("hourlyRate").value) || 0;
+        document.getElementById("totalPayment").value = hoursWorked * hourlyRate;
+    }
+</script>
